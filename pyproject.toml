@@ -1,0 +1,12 @@
+[project]
+name = "museable"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "aiohttp>=3.13.3",
+    "flask>=3.1.2",
+    "peewee>=4.0.0",
+    "pygame-ce>=2.5.6",
+]
