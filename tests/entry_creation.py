@@ -21,7 +21,7 @@ def create_unique_album(artist_entry):
         artist=artist_entry
     )
 
-def create_unique_track(artist_entry, album_entry):  # fixed order
+def create_unique_track(artist_entry, album_entry):
     Track.create(
         title=f"{uuid4()}",
         audio_url="/audio.mp3",
