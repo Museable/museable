@@ -9,7 +9,7 @@ app = create_app()
 def create_unique_artist():
     return Artist.create(
         name=f"{uuid4()}",
-        picture="/picture.png",
+        picture="/userdata/picture.png",
         followers=125,
         description="Aaaaa"
     )
@@ -17,15 +17,14 @@ def create_unique_artist():
 def create_unique_album(artist_entry):
     return Album.create(
         title=f"{uuid4()}",
-        cover="/cover.png",
+        cover="/userdata/cover.png",
         artist=artist_entry
     )
 
 def create_unique_track(artist_entry, album_entry):
     Track.create(
         title=f"{uuid4()}",
-        audio_url="/audio.mp3",
-        duration=125,
+        audio_url="/userdata/audio.mp3",
         album=album_entry,
         artist=artist_entry,
     )

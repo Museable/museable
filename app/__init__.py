@@ -1,5 +1,7 @@
-from flask import Flask
+from flask import Flask, Blueprint
 from flask_jwt_extended import JWTManager
+from flask_cors import CORS
+from pathlib import Path
 
 from dotenv import dotenv_values
 
@@ -9,14 +11,14 @@ from .models.album import Album
 from .models.artist import Artist
 from .models.user import User
 
-
 config = dotenv_values(".env")
 
 def create_app():
     app = Flask(__name__)
     app.config["JWT_SECRET_KEY"] = config["JWT_SECRET_KEY"]
 
-    JWTManager(app)
+    jwt = JWTManager(app)
+    CORS(app)
 
     @app.before_request
     def connect_db():
@@ -35,5 +37,18 @@ def create_app():
     app.register_blueprint(tracks_bp, url_prefix="/api/tracks")
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
     app.register_blueprint(test_bp, url_prefix="/api/test")
+    
+    app_dir = Path(__file__).resolve().parent
+    userdata_dir = app_dir / "staticdata"
+    if not userdata_dir.exists():
+        userdata_dir = app_dir.parent / "staticdata"
+
+    staticdata = Blueprint(
+        "staticdata",
+        __name__,
+        static_url_path="/userdata",
+        static_folder=str(userdata_dir),
+    )
+    app.register_blueprint(staticdata)
 
     return app
